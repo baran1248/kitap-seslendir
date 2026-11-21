@@ -553,17 +553,22 @@ def convert_book(
 # ---------------------------------------------------------------------------
 
 CSS = """
-.gradio-container { max-width: 1280px !important; margin: 0 auto !important; }
+.gradio-container {
+    max-width: 1280px !important; margin: 0 auto !important;
+    background: #fffdf8 !important;
+    --block-background-fill: #fffaf0 !important;
+    --body-text-color: #4a3222 !important;
+}
 
 .ks-hero {
     display: flex; align-items: center; gap: 18px;
     padding: 24px 28px; border-radius: 20px; margin-bottom: 14px;
-    background: linear-gradient(135deg, #083344 0%, #0d9488 55%, #06b6d4 100%);
-    color: #fff; box-shadow: 0 12px 30px rgba(13, 148, 136, .25);
+    background: linear-gradient(135deg, #3e2723 0%, #795548 55%, #a1887f 100%);
+    color: #fff; box-shadow: 0 12px 30px rgba(121, 85, 72, .25);
 }
 .ks-hero-icon { font-size: 2.6rem; line-height: 1; }
-.ks-hero h1 { margin: 0; font-size: 1.85rem; font-weight: 800; letter-spacing: -.02em; color: #fff !important; }
-.ks-hero p { margin: 5px 0 0; opacity: .92; font-size: .95rem; color: #ecfeff !important; }
+.ks-hero h1 { margin: 0; font-size: 1.85rem; font-weight: 800; letter-spacing: -.02em; color: #fffaf0 !important; }
+.ks-hero p { margin: 5px 0 0; opacity: .92; font-size: .95rem; color: #f5e6d3 !important; }
 
 .ks-alert {
     display: flex; gap: 10px; align-items: flex-start;
@@ -602,7 +607,7 @@ CSS = """
 .ks-bar { height: 10px; border-radius: 999px; overflow: hidden; background: var(--border-color-primary); }
 .ks-bar-fill {
     height: 100%; border-radius: 999px;
-    background: linear-gradient(90deg, #0d9488, #06b6d4);
+    background: linear-gradient(90deg, #8b5e3c, #c19a6b);
     transition: width .35s ease;
 }
 .ks-progress.retry .ks-bar-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
@@ -615,6 +620,23 @@ CSS = """
 #ks-file { min-height: 150px; }
 #ks-convert { min-height: 48px; font-size: 1.02rem; }
 """
+
+# Kitap dünyasına uygun sıcak palet: krem zemin, kahverengi vurgular.
+KAHVERENGI = gr.themes.Color(
+    c50="#fdf8f3", c100="#f6ece1", c200="#ead8c4", c300="#d7b99a",
+    c400="#bd956f", c500="#a5774f", c600="#8b5e3c", c700="#70492f",
+    c800="#593b27", c900="#4a3222", c950="#2a1a11", name="kahverengi",
+)
+KREM = gr.themes.Color(
+    c50="#fffdf8", c100="#faf4e8", c200="#efe2cc", c300="#ddc9a9",
+    c400="#c4a882", c500="#a98a66", c600="#8d7155", c700="#715a45",
+    c800="#5d4a3a", c900="#4e3f32", c950="#2a211b", name="krem",
+)
+TERRAKOTA = gr.themes.Color(
+    c50="#fdf6f0", c100="#f9e8dd", c200="#f0cdb9", c300="#e2a98d",
+    c400="#cd8363", c500="#b96b4b", c600="#9d5438", c700="#7e412d",
+    c800="#673828", c900="#563124", c950="#2f1812", name="terrakota",
+)
 
 with gr.Blocks(title="Kitap Seslendir") as demo:
     gr.HTML(
@@ -826,9 +848,9 @@ if __name__ == "__main__":
         server_port=int(os.environ.get("PORT", "7860")),
         inbrowser=not is_web,
         theme=gr.themes.Soft(
-            primary_hue="teal",
-            secondary_hue="cyan",
-            neutral_hue="slate",
+            primary_hue=KAHVERENGI,
+            secondary_hue=TERRAKOTA,
+            neutral_hue=KREM,
         ),
         css=CSS,
         allowed_paths=[str(OUTPUT_DIR)],
