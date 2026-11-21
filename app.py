@@ -111,12 +111,9 @@ def on_page_load() -> None:
 
 
 def on_page_unload() -> None:
-    """Sekme kapatıldığında kısa bir gecikmeyle uygulamayı kapatır.
-
-    Yenilemede önce ``unload`` sonra ``load`` tetiklenebildiği için son
-    yüklemeden bu yana geçen süre kontrol edilir; yeni sayfa yüklenirse
-    kapanma iptal edilir.
-    """
+    """Yerel sürümde sekme kapanınca uygulamayı kapatır (web sürümünde kapatmaz)."""
+    if os.environ.get("RENDER") == "true" or os.environ.get("PORT"):
+        return  # Web sunucusunda her kullanıcı için kapanma olmaz
     if time.monotonic() - _last_page_load < REFRESH_GRACE:
         return
     _schedule_shutdown()
@@ -817,14 +814,17 @@ with gr.Blocks(title="Kitap Seslendir") as demo:
 
 
 if __name__ == "__main__":
-    if _app_already_running():
+    import os
+
+    is_web = os.environ.get("RENDER") == "true" or os.environ.get("PORT")
+    if not is_web and _app_already_running():
         webbrowser.open(APP_URL)
         raise SystemExit(0)
 
     demo.queue(default_concurrency_limit=8).launch(
-        server_name="127.0.0.1",
-        server_port=7860,
-        inbrowser=True,
+        server_name="0.0.0.0" if is_web else "127.0.0.1",
+        server_port=int(os.environ.get("PORT", "7860")),
+        inbrowser=not is_web,
         theme=gr.themes.Soft(
             primary_hue="indigo",
             secondary_hue="sky",
