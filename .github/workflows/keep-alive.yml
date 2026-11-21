@@ -1,10 +1,13 @@
 name: Render sitesini uyanik tut
 
-# Ucretsiz GitHub Actions zamanlayicisi: Render ücretsiz katmani 15 dk
-# bosta kalinca sunucuyu uyutuyor. Her 5 dakikada bir siteye istek atariz.
+# Düzensiz dakikalarda, 7 saatlik döngüyle ping:
+# 00:07 -> 07:19 -> 14:33 -> 21:46 -> (ertesi gün 00:07)
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "7 0 * * *"
+    - cron: "19 7 * * *"
+    - cron: "33 14 * * *"
+    - cron: "46 21 * * *"
   workflow_dispatch:
 
 jobs:
