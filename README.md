@@ -11,6 +11,21 @@ yüklenmez, yalnızca metin seslendirme servisine gönderilir.
 
 ---
 
+## 🌐 Web sürümü (ücretsiz, kurulum gerektirmez)
+
+Uygulamanın herkese açık web sürümü:
+
+**https://kitap-seslendir.onrender.com**
+
+Tarayıcıdan açıp doğrudan kullanabilirsiniz. Notlar:
+
+- Ücretsiz katmanda sunucu 15 dakika boşta kalınca uyur; ilk açılış 50 saniyeye
+  kadar sürebilir.
+- Dosyalar sunucuda geçici olarak işlenir ve kalıcı saklanmaz.
+- Yerel sürüm için aşağıdaki kurulum adımlarını izleyin.
+
+---
+
 ## Özellikler
 
 - **Kitap Seslendir** başlıklı, sürükle-bırak destekli arayüz
