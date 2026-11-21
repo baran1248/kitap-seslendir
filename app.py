@@ -119,6 +119,33 @@ def on_page_unload() -> None:
     _schedule_shutdown()
 
 
+# ---------------------------------------------------------------------------
+# Web sunucusunu uyanık tutma (Render ücretsiz katmanı 15 dk boşta kalınca uyur)
+# ---------------------------------------------------------------------------
+
+KEEP_ALIVE_INTERVAL = float(os.environ.get("KEEP_ALIVE_INTERVAL", "300"))
+
+
+def _keep_awake_loop() -> None:
+    """Web modunda kendi adresine periyodik olarak bakarak sunucuyu uyanık tutar."""
+    url = os.environ.get("RENDER_EXTERNAL_URL") or "https://kitap-seslendir.onrender.com"
+    request = urllib.request.Request(url, headers={"User-Agent": "KitapSeslendir-KeepAlive/1.0"})
+    while True:
+        time.sleep(KEEP_ALIVE_INTERVAL)
+        try:
+            with urllib.request.urlopen(request, timeout=15) as response:
+                response.read(1024)
+            print("[keep-alive] sunucu uyanık", flush=True)
+        except Exception as exc:  # noqa: BLE001
+            print(f"[keep-alive] ping başarısız: {exc}", flush=True)
+
+
+def _start_keep_awake() -> None:
+    """Yalnızca web (Render) modunda arka plan ping iş parçacığını başlatır."""
+    thread = threading.Thread(target=_keep_awake_loop, name="keep-alive", daemon=True)
+    thread.start()
+
+
 def _cleanup_stale_temp_dirs(max_age_seconds: int = 86400) -> None:
     """Ani kapanmalardan kalan eski geçici ses klasörlerini temizler."""
     root = Path(tempfile.gettempdir())
@@ -832,6 +859,10 @@ if __name__ == "__main__":
     import os
 
     is_web = os.environ.get("RENDER") == "true" or os.environ.get("PORT")
+
+    if is_web:
+        _start_keep_awake()
+
     if not is_web and _app_already_running():
         webbrowser.open(APP_URL)
         raise SystemExit(0)
