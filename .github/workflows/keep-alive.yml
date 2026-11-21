@@ -1,13 +1,10 @@
 name: Render sitesini uyanik tut
 
-# Düzensiz dakikalarda, 7 saatlik döngüyle ping:
-# 00:07 -> 07:19 -> 14:33 -> 21:46 -> (ertesi gün 00:07)
+# Düzensiz dakika kalıbı, saat başı değil 7 saatte bir tekrarlanır:
+# 00:03,00:11,...,00:57 -> 07:03,... -> 14:03,... -> 21:03,...
 on:
   schedule:
-    - cron: "7 0 * * *"
-    - cron: "19 7 * * *"
-    - cron: "33 14 * * *"
-    - cron: "46 21 * * *"
+    - cron: "3,11,18,26,34,42,49,57 */7 * * *"
   workflow_dispatch:
 
 jobs:
