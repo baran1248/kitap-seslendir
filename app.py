@@ -615,8 +615,6 @@ CSS = """
 .ks-detail { margin-top: 7px; font-size: .82rem; color: var(--body-text-color-subdued); line-height: 1.45; }
 .ks-hint { font-size: .85rem; color: var(--body-text-color-subdued); padding: 6px 2px; }
 
-.ks-footer { text-align: center; font-size: .8rem; color: var(--body-text-color-subdued); margin-top: 18px; }
-
 #ks-file { min-height: 150px; }
 #ks-convert { min-height: 48px; font-size: 1.02rem; }
 """
@@ -773,11 +771,6 @@ with gr.Blocks(title="Kitap Seslendir") as demo:
                 download_m4b = gr.DownloadButton(
                     "M4B indir", variant="secondary", visible=False
                 )
-
-    gr.HTML(
-        '<div class="ks-footer">Seslendirme için internet bağlantısı gerekir (Microsoft edge-tts). '
-        "Dosyalarınız yalnızca bu bilgisayarda işlenir; çıktılar <code>outputs/</code> klasörüne kaydedilir.</div>"
-    )
 
     last_file = gr.State(None)
 
