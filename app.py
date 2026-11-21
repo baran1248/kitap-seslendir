@@ -677,18 +677,6 @@ with gr.Blocks(title="Kitap Seslendir") as demo:
         """
     )
 
-    if FFMPEG_READY:
-        gr.HTML(_alert(f"FFmpeg hazır (sürüm {FFMPEG_VERSION or 'bilinmiyor'}).", "ok"))
-    else:
-        gr.HTML(
-            _alert(
-                "FFmpeg bulunamadı! Ses birleştirme ve M4B dönüşümü çalışmaz. "
-                "Windows'ta 'winget install Gyan.FFmpeg' veya 'choco install ffmpeg' "
-                "komutuyla kurup uygulamayı yeniden başlatın.",
-                "error",
-            )
-        )
-
     with gr.Row(equal_height=False):
         # ---------------- Sol sütun: dosya + metin ----------------
         with gr.Column(scale=7, min_width=420):
