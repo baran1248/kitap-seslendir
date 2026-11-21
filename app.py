@@ -558,12 +558,12 @@ CSS = """
 .ks-hero {
     display: flex; align-items: center; gap: 18px;
     padding: 24px 28px; border-radius: 20px; margin-bottom: 14px;
-    background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 55%, #0284c7 100%);
-    color: #fff; box-shadow: 0 12px 30px rgba(67, 56, 202, .25);
+    background: linear-gradient(135deg, #083344 0%, #0d9488 55%, #06b6d4 100%);
+    color: #fff; box-shadow: 0 12px 30px rgba(13, 148, 136, .25);
 }
 .ks-hero-icon { font-size: 2.6rem; line-height: 1; }
 .ks-hero h1 { margin: 0; font-size: 1.85rem; font-weight: 800; letter-spacing: -.02em; color: #fff !important; }
-.ks-hero p { margin: 5px 0 0; opacity: .92; font-size: .95rem; color: #eef2ff !important; }
+.ks-hero p { margin: 5px 0 0; opacity: .92; font-size: .95rem; color: #ecfeff !important; }
 
 .ks-alert {
     display: flex; gap: 10px; align-items: flex-start;
@@ -602,7 +602,7 @@ CSS = """
 .ks-bar { height: 10px; border-radius: 999px; overflow: hidden; background: var(--border-color-primary); }
 .ks-bar-fill {
     height: 100%; border-radius: 999px;
-    background: linear-gradient(90deg, #4f46e5, #0ea5e9);
+    background: linear-gradient(90deg, #0d9488, #06b6d4);
     transition: width .35s ease;
 }
 .ks-progress.retry .ks-bar-fill { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
@@ -826,8 +826,8 @@ if __name__ == "__main__":
         server_port=int(os.environ.get("PORT", "7860")),
         inbrowser=not is_web,
         theme=gr.themes.Soft(
-            primary_hue="indigo",
-            secondary_hue="sky",
+            primary_hue="teal",
+            secondary_hue="cyan",
             neutral_hue="slate",
         ),
         css=CSS,
